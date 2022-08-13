@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.home {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	width: 75px;
+	height: 75px;
+	border-radius: 50%;
+}
+
+.carousel {
+	width: 30%;
+
+}
+
+input[text] {
+	width: 100px;
+}
+
+#actions {
+	text-align: left;
+	padding: 20px;
+}
+
+#dropdown {
+	font-size: 20px;
+}
