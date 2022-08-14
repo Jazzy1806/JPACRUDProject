@@ -35,7 +35,7 @@ public class SiteController {
 		List<Site> allSites = dao.findAll();
 		List<Site> sitesByCat = new ArrayList<Site>();
 		for (Site s : allSites) {
-			if (category.equals(s.getCategory())) {
+			if (category.startsWith(s.getCategory())) {
 				sitesByCat.add(s);
 			}
 		}
@@ -52,7 +52,7 @@ public class SiteController {
 		List<Site> allSites = dao.findAll();
 		List<Site> sitesByCountry = new ArrayList<Site>();
 		for (Site s : allSites) {
-			if (s.getCountry().startsWith(letter)) {
+			if ((""+s.getCountry().toUpperCase().charAt(0)).startsWith(letter)) {
 				sitesByCountry.add(s);
 			}
 		}
