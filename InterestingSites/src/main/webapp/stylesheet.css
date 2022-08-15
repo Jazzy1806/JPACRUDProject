@@ -4,12 +4,28 @@ body {
 	background-image: url("https://nancieteresa.files.wordpress.com/2015/01/grunge-travel-background-239421341.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
+
 }
 
 .main_img {
 	width: 100%;
 	height: 250px;
 }
+
+.card mb-3 {
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+#landing_cards {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-25%, -50%);
+  transform: translate(-25%, -50%);
+}
+
 
 #site_info {
 	font-size: 20px;
@@ -43,8 +59,8 @@ body {
 }
 
 .landing_img {
-	width: 130px;
-	height: 200px;
+	width: 250px;
+	height: 300px;
 }
 .form_img {
 	width: 800px;

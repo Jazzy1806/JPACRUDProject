@@ -42,7 +42,7 @@ class SiteTest {
 	}
 
 	@Test
-	void test_Sites_entitiy_mapping() {
+	void test_Sites_entity_mapping() {
 		assertNotNull(site);
 		assertEquals("Petra", site.getName());
 	}

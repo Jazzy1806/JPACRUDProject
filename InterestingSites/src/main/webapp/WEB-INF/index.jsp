@@ -16,19 +16,18 @@
 		<c:if test="${siteDeleted==false}"> <script>alert("Could not delete site - try again");</script></c:if>
 	
 		<c:if test="${! empty categories}">
-		<div class="row row-cols-1 row-cols-md-2 g-2">
-		
-		<div class="card mb-3" style="max-width: 540px;">
+		<div class="row row-cols-1 row-cols-md-2 g-4">
+	
+		<div class="card mb-3" style="max-width: 800px;" >
 		  <div class="row g-0">
 			    <div class="col-md-4">
 			      <img class="landing_img" src="https://www.intrax.de/blog/wp-content/uploads/2019/06/bit-cloud-1169970-unsplash-684x1024.jpg" class="img-fluid rounded-start" alt="...">
 			    </div>
 			    <div class="col-md-8">
-			      <div class="card-body">
-			        <h5 class="card-title">Search By Category</h5>
-			        <p class="card-text">
+			      <div class="card-body" id="landing_cards">
+			        <h3 class="card-title" style="text-align:center">Search By Category</h3>
+			        <p class="card-text" >
 			          <form action="categorySites.do" method="get">
-						<label for="${category}">Categories:</label>
 						<select name="category" id="dropdown" required>
 							<c:forEach var="category" items="${categories}" varStatus="loop">
 								<option value="${category}">${category}</option>
@@ -43,16 +42,17 @@
 		</div>
 
 
-		<div class="card mb-3" style="max-width: 540px;">
+		<div class="card mb-3" style="max-width: 900px;">
 		  <div class="row g-0">
 			    <div class="col-md-4">
 			      <img class="landing_img" src="https://www.aluxurytravelblog.com/wp-content/uploads/2020/07/Road-Trip-1.jpg" class="img-fluid rounded-start" alt="...">
 			    </div>
 			    <div class="col-md-8">
-			      <div class="card-body">
-			        <h5 class="card-title">Not seeing your favorite site? Share it with us!</h5>
+			      <div class="card-body" id="landing_cards">
+			        <h3 class="card-title" style="text-align:center">Not seeing your favorite site? </h3>
 			        <p class="card-text">
 				<form action="newSite.do" method="get">
+			        <label><h3>Share it with us!</h3></label>
 					<input type="submit" value="Add a New Site" />
 				</form>
 			       </p>
