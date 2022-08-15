@@ -6,7 +6,7 @@
 
  <div class="navbar-header">
     <a class="navbar-brand" href="index.do">
-      <img src="https://i.dlpng.com/static/png/7116525_preview.png" width="50" height="50" class="d-inline-block align-text-top">
+      <img src="https://freepngimg.com/download/steampunk_gear/21525-9-steampunk-gear-transparent-image.png" width="50" height="50" class="d-inline-block align-text-top">
       World of Wonder
     </a>
       <div class="navbar-nav .w-100 .justify-content-end">
