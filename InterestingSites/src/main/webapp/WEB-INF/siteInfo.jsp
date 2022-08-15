@@ -4,16 +4,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>HOMEPAGE</title>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDG5LaUdpH_g-BO3DaAAJwEnqL361Z8-PU&callback=loadMap"></script>
+
+<jsp:include page="navbar.jsp"/>
+<jsp:include page="bootstrapHead.jsp"/>
 <link rel='stylesheet' href='stylesheet.css'>
 
+<script type="text/javascript">
+  function loadMap() {
+	var latitude = parseFloat(document.getElementById("latitude").innerHTML);
+	var longitude = parseFloat(document.getElementById("longitude").innerHTML);
+	  
+    var latlng = new google.maps.LatLng(latitude, longitude);
+    var myOptions = {
+      zoom: 4,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_container"),myOptions);
+	
+    var marker = new google.maps.Marker({
+      position: latlng, 
+      map: map, 
+      title:"my hometown, Malim Nawar!"
+    }); 
+  
+  }
+</script>	
+
 </head>
-<body>
-	<h1>World of Wonder</h1>
-
-	<a href="index.do"><img class="home" src="https://www.kindpng.com/picc/m/111-1110719_blue-home-page-icon-png-website-icon-home.png" align="right" width= 5% title="Home Page"/></a>
-
+<body onload="loadMap()">
 	<c:choose>
 		<c:when test="${siteAdded == true}">
 			<h2>${addMessage}</h2>
@@ -22,7 +46,6 @@
 			<h2>${addFail}</h2>
 		</c:otherwise>
 	</c:choose>
-
 	<c:choose>
 		<c:when test="${siteUpdated == true}">
 			<h2>${editMessage}</h2>
@@ -31,44 +54,55 @@
 			<h2>${editFail}</h2>
 		</c:otherwise>
 	</c:choose>
-	
-	<img src="${site.image}" title="Image of ${site.name}"/>
-	<h2>Site Details:</h2>
-		<ul>
-			<li>Site Name: ${site.name}</li>
-			<li>Country: ${site.country}</li>
-			<li>Description: ${site.description}</li>
-			<li>Latitude: ${site.latitude}</li>
-			<li>Longitude: ${site.longitude}</li>
-			<li>Category: ${site.category}</li>
-		</ul>
-
-	<form action="editSite.do" method="get">
-		<input type="hidden" value="${site.id}" name="id" /> 
-		<input class="button3" type="submit" value="Edit Site" />
-	</form>
-	<form action="confirmDelete.do" method="get">
-		<input type="hidden" value="${site.id}" name="id" /> <input
-			class="danger" type="submit" value="Delete Site" />
-	</form>
-	<form action="newSite.do" method="get">
-		 <input class="button3" type="submit" value="Add Site" />
-	</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+	<div class="table-responsive">
+		<table>
+			<tbody>
+				<tr>
+					<td  rowspan=3><img class="detail_img" src="${site.image}" title="Image of ${site.name}"/></td>
+					<td class="buffer"></td>
+					<td colspan=3 class="text-wrap col-md-offset-1" id="site_info">
+						<h1><strong>Site Name: ${site.name}</strong></h1><br>
+						<ul style="list-style-type: none">
+							<li><strong>Country: </strong>${site.country}</li>
+							<li class="text-wrap"><strong>Description: </strong>${site.description}</li>
+							<li><strong>Category: </strong>${site.category}</li>
+							<li>Latitude: <h4 id="latitude">${site.latitude}</h4></li>
+							<li>Longitude: <h4 id="longitude">${site.longitude}</h4></li>
+						</ul>
+					</td>
+				</tr>
+				<tr class="action_items .justify-content-end">
+					<td class="buffer"></td>
+					<td>
+						<form action="editSite.do" method="get">
+							<input type="hidden" value="${site.id}" name="id" /> 
+							<input class="action_button" type="submit" value="Edit Site" />
+						</form>
+					</td>
+					<td>	
+						<form action="confirmDelete.do" method="get">
+							<input type="hidden" value="${site.id}" name="id" /> 
+							<input class="action_button" type="submit" value="Delete Site" />
+						</form>
+					</td>
+					<td>
+						<form action="newSite.do" method="get">
+							 <input class="action_button" type="submit" value="Add Site" />
+						</form>
+					</td>
+					<td class="buffer"></td>
+					<td class="buffer"></td>
+					<td class="buffer"></td>
+		       </tr>
+		       <tr>
+		       	  <td></td>
+	      		  <td colspan=3>
+					<div id="map_container" ></div>
+				  </td>
+			   </tr>
+			</tbody>
+		</table>
+	</div>
+	<jsp:include page="bootstrapFoot.jsp" />
 </body>
 </html>
-
-

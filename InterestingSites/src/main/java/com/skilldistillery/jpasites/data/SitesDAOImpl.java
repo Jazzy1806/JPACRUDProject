@@ -24,7 +24,7 @@ public class SitesDAOImpl implements SitesDAO {
 
 	@Override
 	public List<Site> findAll() {
-		String query = "Select s FROM Site s";
+		String query = "Select s FROM Site s ORDER BY s.name";
 		List<Site> sites = em.createQuery(query, Site.class).getResultList();
 		return sites;
 	}
@@ -76,6 +76,19 @@ public class SitesDAOImpl implements SitesDAO {
 			}
 		}
 		return categories;
+	}
+
+	@Override
+	public ArrayList<String> findContinents() {
+		String query = "Select DISTINCT s FROM Site s ORDER BY s.continent, s.name";
+		List<Site> results = em.createQuery(query, Site.class).getResultList();
+		ArrayList<String> continents = new ArrayList<String>();
+		for (Site s : results) {
+			if (!continents.contains(s.getContinent())) {
+			continents.add(s.getContinent());
+			}
+		}
+		return continents;
 	}
 	
 

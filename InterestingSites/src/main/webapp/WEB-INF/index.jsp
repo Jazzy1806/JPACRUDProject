@@ -5,120 +5,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>HOMEPAGE</title>
-<link rel='stylesheet' href='stylesheet.css'>
 
+<title>HOMEPAGE</title>
+<jsp:include page="navbar.jsp"/>
+<jsp:include page="bootstrapHead.jsp"/>
+<link rel='stylesheet' href='stylesheet.css'>
 </head>
 <body>
-	<a href="index.do"><img class="home" src="https://www.kindpng.com/picc/m/111-1110719_blue-home-page-icon-png-website-icon-home.png" align="right" width= 5% title="Home Page"/></a>
-
-	<h1>World of Wonder</h1>
 		<c:if test="${siteDeleted}"><script>alert("Site successfully deleted");</script></c:if>
 		<c:if test="${siteDeleted==false}"> <script>alert("Could not delete site - try again");</script></c:if>
-
-	<div>
-		<p>INTRODUCTION STUB----ADD MORE TO THIS</p>
-	</div>
 	
-<!-- Category dropdown and add film option buttons table -->
-	<table>
-		<tr>
-			<td>	
-				<form action="categorySites.do" method="get">
-					<label for="${category}">Categories:</label>
+		<c:if test="${! empty categories}">
+		<div class="row row-cols-1 row-cols-md-2 g-2">
+		
+		<div class="card mb-3" style="max-width: 540px;">
+		  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img class="landing_img" src="https://www.intrax.de/blog/wp-content/uploads/2019/06/bit-cloud-1169970-unsplash-684x1024.jpg" class="img-fluid rounded-start" alt="...">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">Search By Category</h5>
+			        <p class="card-text">
+			          <form action="categorySites.do" method="get">
+						<label for="${category}">Categories:</label>
 						<select name="category" id="dropdown" required>
 							<c:forEach var="category" items="${categories}" varStatus="loop">
 								<option value="${category}">${category}</option>
 							</c:forEach>
 						</select>
-					<input type="submit" value="See Sites" />
-				</form>
-			</td>
-			<td>
-				<form action="newSite.do" method="get">
-					<p><strong>Do you know of an amazing place you'd like to share?<br>
-							   Add your own custom site below!</strong></p><br><br>
+						<input type="submit" value="See Sites" />
+					</form>
+			       </p>
+			      </div>
+			    </div>
+		  </div>
+		</div>
 
+
+		<div class="card mb-3" style="max-width: 540px;">
+		  <div class="row g-0">
+			    <div class="col-md-4">
+			      <img class="landing_img" src="https://www.aluxurytravelblog.com/wp-content/uploads/2020/07/Road-Trip-1.jpg" class="img-fluid rounded-start" alt="...">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body">
+			        <h5 class="card-title">Not seeing your favorite site? Share it with us!</h5>
+			        <p class="card-text">
+				<form action="newSite.do" method="get">
 					<input type="submit" value="Add a New Site" />
 				</form>
-				
-		</tr>
-			
-	</table>
-<!--  
-	<div>
-	<form action="index.do" method="GET">
-		Film ID: <input type="text" name="fId" /> 
-		<input type="submit" value="Show Film" />
-	</form><br>
-	</div>
+			       </p>
+			      </div>
+			    </div>
+		  </div>
+		</div></div>
+		</c:if>
 
--->
-	
-	<!-- Alphabet to select sites by country first letter -->
-	
 	
 	<br>
-	<h2>Or Search for Sites by Country: </h2>
-	<table>
-		<tr>
-		<td></td>
-		<c:forEach var="letter" items="${alphabet}">
-			<td><a href="countrySites.do?letter=${letter}">${letter}</a></td>
-		</c:forEach>
-		</tr>
-	</table>
-	
 	<c:choose>
-		<c:when test="${! empty sitesByCountry}">
-			<ol>
-				<c:forEach var="site" items="${sitesByCountry}">
-					<li><a href="details.do?id=${site.id}"><img class="carousel" src="${site.image}" title="${site.name}, ${site.country}"/></a></li>
+		<c:when test="${! empty sitesByContinent}">
+			<div class="row row-cols-1 row-cols-md-3 g-${sitesByContinentSize}">
+				<c:forEach var="site" items="${sitesByContinent}">
+			  <div class="col">
+			    <div class="card h-100">
+			      <a href="details.do?id=${site.id}"><img class="card-img-top " src="${site.image}" alt="${site.name}, ${site.country}"/></a>
+			      <div class="card-body">
+			        <h5 class="card-title">${site.name}</h5>
+			        <p class="card-text">${site.country}</p>
+			      </div>
+			    </div>
+			  </div>
 				</c:forEach>
-			</ol>
+			</div>
 		</c:when>
-			
 		<c:otherwise>
-			<h1>${countryFail}</h1>
+			<h1>${continentFail}</h1>
 		</c:otherwise>
 	</c:choose>
-	
-<br>
 	<c:choose>
 		<c:when test="${! empty siteList}">
-			<ol>
+			<div class="row row-cols-1 row-cols-md-3 g-${siteListSize}">
 				<c:forEach var="site" items="${siteList}">
-					<li><a href="details.do?id=${site.id}"><img class="carousel" src="${site.image}" title="${site.name}, ${site.country}"/></a></li>
+			  <div class="col">
+			    <div class="card h-100">
+			   		 <a href="details.do?id=${site.id}"><img class="card-img-top" src="${site.image}" title="${site.name}, ${site.country}"/></a>
+			      <div class="card-body">
+			        <h5 class="card-title">${site.name}</h5>
+			        <p class="card-text">${site.country}</p>
+			      </div>
+			    </div>
+			  </div>
 				</c:forEach>
-			</ol>
+			</div>
 		</c:when>
-		
 		<c:otherwise>
 			<h1>${categoryFail}</h1>
 		</c:otherwise>
 	</c:choose>
-	
-<!-- DO I STILL WANT THIS PART???
-	<c:choose>
-		<c:when test="${empty filmList}">
-				<h2>${listFail}</h2>
-			<c:forEach var="film" items="${allFilms}">
-				<a href="getFilm.do?fId=${film.id}">${film.title}</a><br>
-			</c:forEach>
-		</c:when>
-		<c:otherwise>
-			<c:forEach var="f" items="${filmList}" varStatus="loop">
-							<a href="getFilm.do?fId=${f.id}">${f.title}</a><br>
-			</c:forEach>
-		</c:otherwise>
-	</c:choose>
-	
--->
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<jsp:include page="bootstrapFoot.jsp" />
 </body>
 </html>
 

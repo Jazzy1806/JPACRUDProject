@@ -12,5 +12,6 @@ public interface SitesDAO {
 	boolean deleteSite(int id);
 	boolean updateSite(int id, Site site);
 	ArrayList<String> findCategories();
+	ArrayList<String> findContinents();
 	
 }

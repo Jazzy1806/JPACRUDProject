@@ -20,14 +20,20 @@ public class SiteController {
 	@Autowired
 	private SitesDAO dao;
 	
-	private String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-
 	@RequestMapping(path={"/", "index.do"})
 	public String index(Model model) {
-		model.addAttribute("alphabet", alphabet);
 		model.addAttribute("categories", dao.findCategories());
+		model.addAttribute("continents", dao.findContinents());
 		model.addAttribute("allSites", dao.findAll());
 		return "index";
+	}
+	
+	@RequestMapping(path="details.do")
+	public String index(Model model, int id) {
+		Site site = dao.findById(id);
+		model.addAttribute("site", site);
+		model.addAttribute("siteError", "Sorry, something went wrong. Please try another site or try again later.");
+		return "siteInfo";
 	}
 	
 	@RequestMapping(path="categorySites.do")
@@ -39,28 +45,29 @@ public class SiteController {
 				sitesByCat.add(s);
 			}
 		}
-		model.addAttribute("alphabet", alphabet);
 		model.addAttribute("categories", dao.findCategories());
 		model.addAttribute("allSites", allSites);
 		model.addAttribute("siteList", sitesByCat);
+		model.addAttribute("siteListSize", sitesByCat.size());
 		model.addAttribute("categoryFail", "There are no sites that match your search. \n\n\n We are still expanding our site list. If you'd like to contribute, click \"Add a site\"!");
 		return "index";
 	}
 	
-	@RequestMapping(path="countrySites.do")
-	public String getSitesByCountry(String letter, Model model) {
+	@RequestMapping(path="continentSites.do")
+	public String getSitesByCountry(String con, Model model) {
 		List<Site> allSites = dao.findAll();
-		List<Site> sitesByCountry = new ArrayList<Site>();
+		List<Site> sitesByCon = new ArrayList<Site>();
 		for (Site s : allSites) {
-			if ((""+s.getCountry().toUpperCase().charAt(0)).startsWith(letter)) {
-				sitesByCountry.add(s);
+			if (con.equalsIgnoreCase(s.getContinent())) {
+				sitesByCon.add(s);
 			}
 		}
-		model.addAttribute("alphabet", alphabet);
 		model.addAttribute("categories", dao.findCategories());
-		model.addAttribute("allSites", allSites);
-		model.addAttribute("sitesByCountry", sitesByCountry);
-		model.addAttribute("countryFail", "There are no sites that match your search. \n\n\n We are still expanding our site list. If you'd like to contribute, click \"Add a site\"!");
+		model.addAttribute("continents", dao.findContinents());
+		model.addAttribute("allSites", dao.findAll());
+		model.addAttribute("sitesByContinent", sitesByCon);
+		model.addAttribute("sitesByContinentSize", sitesByCon.size());
+		model.addAttribute("continentFail", "There are no sites that match your search. \n\n\n We are still expanding our site list. If you'd like to contribute, click \"Add a site\"!");
 		return "index";
 	}
 
@@ -68,7 +75,8 @@ public class SiteController {
 	@RequestMapping(path="newSite.do", method= RequestMethod.GET)
 	public String newSiteForm(Model model) {
 		model.addAttribute("categories", dao.findCategories());
-		return "../addSiteForm";
+		model.addAttribute("continents", dao.findContinents());
+		return "addSiteForm";
 	}
 	
 	@RequestMapping(path = "newSite.do", method = RequestMethod.POST)
@@ -84,7 +92,8 @@ public class SiteController {
 	public String editSiteForm(Model model, @RequestParam int id) {
 		model.addAttribute("site", dao.findById(id));
 		model.addAttribute("categories", dao.findCategories());
-		return "../updateSiteForm";
+		model.addAttribute("continents", dao.findContinents());
+		return "updateSiteForm";
 	}
 	
 	@RequestMapping(path = "editSite.do", method = RequestMethod.POST)
@@ -99,7 +108,7 @@ public class SiteController {
 	@RequestMapping(path="confirmDelete.do", method= RequestMethod.GET)
 	public String deleteSiteForm(Model model, @RequestParam int id) {
 		model.addAttribute("site", dao.findById(id));
-		return "../deleteSiteForm";
+		return "deleteSiteForm";
 	}
 	
 	@RequestMapping(path = "delete.do", method = RequestMethod.POST)
@@ -107,21 +116,4 @@ public class SiteController {
 		redir.addFlashAttribute("siteDeleted", dao.deleteSite(id));
 		return "redirect:index.do"; 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping(path="details.do")
-	public String index(Model model, int id) {
-		model.addAttribute("site", dao.findById(id));
-		model.addAttribute("siteError", "Sorry, something went wrong. Please try another site or try again later.");
-		return "siteInfo";
-	}
-
-	
 }

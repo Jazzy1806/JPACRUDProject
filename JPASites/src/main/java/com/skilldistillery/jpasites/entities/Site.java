@@ -14,14 +14,26 @@ public class Site {
 	private int id;
 	private String name;
 	private String country;
+	private String continent;
 	private String description;
-	private String latitude;
-	private String longitude;
+	private double latitude;
+	private double longitude;
 	private String category;
 	private String image;
 	
 	public Site() {
 	}
+
+	
+	public String getContinent() {
+		return continent;
+	}
+
+
+	public void setContinent(String continent) {
+		this.continent = continent;
+	}
+
 
 	public String getCountry() {
 		return country;
@@ -39,19 +51,19 @@ public class Site {
 		this.description = description;
 	}
 
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
@@ -93,9 +105,9 @@ public class Site {
 	
 	@Override
 	public String toString() {
-		return "Site [id=" + id + ", name=" + name + ", country=" + country + ", description=" + description
-				+ ", latitude=" + latitude + ", longitude=" + longitude + ", category=" + category + ", image=" + image
-				+ "]";
+		return "Site [id=" + id + ", name=" + name + ", country=" + country + ", continent=" + continent
+				+ ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + ", category="
+				+ category + ", image=" + image + "]";
 	}
 	
 }
